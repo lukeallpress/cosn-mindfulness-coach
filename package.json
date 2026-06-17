@@ -1,9 +1,9 @@
 {
-  "name": "cosn-mindfulness-coach",
+  "name": "cosn-screentime-mindfulness-coach",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Front-end prototype shell for the CoSN Digital Mindfulness Coach. No AI/API connected.",
+  "description": "Front-end prototype shell for the CoSN Screentime Mindfulness Coach. No AI/API connected.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

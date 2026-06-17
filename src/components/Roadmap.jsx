@@ -1,4 +1,5 @@
 import Section from './ui/Section.jsx'
+import { WORKING_GPT_URL } from '../data/links.js'
 
 const PHASES = [
   {
@@ -10,8 +11,10 @@ const PHASES = [
   {
     phase: 'Phase 2',
     title: 'Guided GPT Prototype',
-    body: 'Test the quality of CoSN-aligned feedback using curated source materials.',
+    body: 'A working custom GPT already tests the quality of CoSN-aligned feedback using curated source materials — functional, if not yet polished.',
     state: 'next',
+    href: WORKING_GPT_URL,
+    linkLabel: 'Try the working GPT',
   },
   {
     phase: 'Phase 3',
@@ -58,6 +61,17 @@ export default function Roadmap() {
               <p className="mt-4 text-sm font-semibold text-cosn-bright">{p.phase}</p>
               <h3 className="mt-1 text-lg font-bold text-cosn-navy">{p.title}</h3>
               <p className="mt-2 text-[15px] leading-relaxed text-cosn-gray">{p.body}</p>
+              {p.href && (
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-cosn-bright hover:text-cosn-blue"
+                >
+                  {p.linkLabel}
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                </a>
+              )}
             </li>
           )
         })}

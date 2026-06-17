@@ -1,5 +1,15 @@
 import Button from './ui/Button.jsx'
 import MockToolPanel from './MockToolPanel.jsx'
+import { WORKING_GPT_URL, POLICY_GUIDANCE_URL } from '../data/links.js'
+
+/* Small outbound-link arrow. */
+function ExternalIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  )
+}
 
 /*
   Decorative background motif: orbit lines, curved arcs, connected nodes, and small
@@ -60,14 +70,14 @@ export default function Hero() {
           </span>
 
           <h1 className="mt-6 text-balance text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]">
-            Help districts move from screen time debate to intentional technology use.
+            Help you move from screen time debate to intentional technology use.
           </h1>
 
           <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-cosn-mist/90">
-            The CoSN Digital Mindfulness Coach is a future-facing planning tool that
-            combines local district context with CoSN research and resources to help
-            teachers and leaders evaluate technology use, protect essential analog
-            learning, and build practical action plans.
+            The CoSN Screentime Mindfulness Coach pairs your local context with CoSN
+            research and resources to help you evaluate a specific lesson, policy question,
+            or screen time concern — protect essential analog learning, and leave with a
+            practical, tailored action plan for the decision in front of you.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
@@ -79,12 +89,34 @@ export default function Hero() {
             </Button>
           </div>
 
-          <p className="mt-6 flex items-center gap-2 text-sm text-cosn-mist/70">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <a
+              href={WORKING_GPT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-semibold text-cosn-mint hover:text-white"
+            >
+              <ExternalIcon />
+              Try the working GPT version
+            </a>
+            <a
+              href={POLICY_GUIDANCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-medium text-cosn-mist/80 hover:text-white"
+            >
+              <ExternalIcon />
+              CoSN Screen Time Policy Guidance
+            </a>
+          </div>
+
+          <p className="mt-5 flex items-start gap-2 text-sm text-cosn-mist/70">
+            <svg viewBox="0 0 24 24" className="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="4" y="11" width="16" height="9" rx="2" />
               <path d="M8 11V8a4 4 0 0 1 8 0v3" />
             </svg>
-            Prototype shell — AI connection intentionally stubbed for now.
+            Prototype shell — this polished interface is a concept; the GPT link above is the
+            rough but working version.
           </p>
         </div>
 

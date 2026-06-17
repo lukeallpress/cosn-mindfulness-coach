@@ -15,7 +15,7 @@ function Wordmark({ scrolled }) {
     <a
       href="#top"
       className={`flex items-center gap-2.5 font-extrabold ${scrolled ? 'text-cosn-navy' : 'text-white'}`}
-      aria-label="CoSN Digital Mindfulness Coach — back to top"
+      aria-label="CoSN Screentime Mindfulness Coach — back to top"
     >
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-cosn-blue to-cosn-teal ring-1 ring-white/30">
         <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -30,7 +30,7 @@ function Wordmark({ scrolled }) {
       <span className="text-[15px] leading-tight sm:text-base">
         CoSN{' '}
         <span className={scrolled ? 'text-cosn-bright' : 'text-cosn-mint'}>
-          Digital Mindfulness Coach
+          Screentime Mindfulness Coach
         </span>
       </span>
     </a>

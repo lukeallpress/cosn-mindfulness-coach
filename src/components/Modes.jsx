@@ -6,7 +6,7 @@ const PANELS = {
     label: 'For Teachers',
     items: [
       'Paste a lesson or activity',
-      'Receive a digital mindfulness snapshot',
+      'Receive a screentime mindfulness snapshot',
       'Get revision suggestions',
       'Add analog balance',
       'Create student-facing rationale',

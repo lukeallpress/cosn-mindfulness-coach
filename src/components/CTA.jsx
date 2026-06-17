@@ -16,7 +16,7 @@ export default function CTA() {
           Help shape what responsible, balanced technology support could look like.
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-cosn-mist/90">
-          This prototype is intended to start a conversation. With CoSN support, the Digital
+          This prototype is intended to start a conversation. With CoSN support, the Screentime
           Mindfulness Coach could become a practical tool for districts navigating screen time
           pressure, policy revision, teacher support, AI readiness, and student digital citizenship.
         </p>

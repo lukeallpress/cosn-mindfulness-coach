@@ -12,13 +12,15 @@
   color alone (accessibility requirement).
 */
 
-// Default text shown in the textarea — the ecosystems example from the spec.
+// Default text shown in the textarea — a leader policy concern (matches the default mode).
 export const DEFAULT_INPUT =
-  'Students will spend 35 minutes watching a video about ecosystems on Chromebooks and then answer 10 multiple-choice questions in Google Forms.'
+  'Our school board is considering a districtwide limit on student screen time in response to community concern. How should we respond with a balanced, research-informed plan instead of a blunt ban?'
 
+// Order matters: the first mode is the default selection. Leaders are the primary audience,
+// so Leader Policy Support leads.
 export const MODES = [
-  { value: 'teacher-lesson', label: 'Teacher Lesson Review' },
   { value: 'leader-policy', label: 'Leader Policy Support' },
+  { value: 'teacher-lesson', label: 'Teacher Lesson Review' },
   { value: 'family-comm', label: 'Family Communication' },
   { value: 'pl-plan', label: 'Professional Learning Plan' },
 ]

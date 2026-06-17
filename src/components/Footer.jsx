@@ -1,3 +1,10 @@
+import { WORKING_GPT_URL, POLICY_GUIDANCE_URL } from '../data/links.js'
+
+const RESOURCES = [
+  { href: WORKING_GPT_URL, label: 'Try the working GPT version' },
+  { href: POLICY_GUIDANCE_URL, label: 'CoSN Screen Time Policy Guidance' },
+]
+
 export default function Footer() {
   return (
     <footer className="border-t border-cosn-mist bg-cosn-offwhite">
@@ -16,7 +23,7 @@ export default function Footer() {
                 </svg>
               </span>
               <span className="text-base font-extrabold text-cosn-navy">
-                CoSN Digital Mindfulness Coach
+                CoSN Screentime Mindfulness Coach
               </span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-cosn-gray">
@@ -27,7 +34,24 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-cosn-gray">Partners</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-cosn-gray">Resources</p>
+            <ul className="mt-3 space-y-2">
+              {RESOURCES.map((r) => (
+                <li key={r.href}>
+                  <a
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-cosn-bright hover:text-cosn-blue"
+                  >
+                    {r.label}
+                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-cosn-gray">Partners</p>
             <div className="mt-3 flex flex-wrap gap-3">
               {/* Optional placeholder for partner logos */}
               {['Your District', 'CoSN', 'Partner'].map((p) => (

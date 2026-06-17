@@ -3,7 +3,7 @@ import StatusPill from './ui/StatusPill.jsx'
 import { DEFAULT_INPUT, MODES, MOCK_RESPONSES } from '../data/mockResponse.js'
 
 /*
-  Digital Mindfulness Review — the interactive product preview.
+  Screentime Mindfulness Review — the interactive product preview.
 
   IMPORTANT: This panel does NOT call any AI model or backend. It looks up a canned
   response from src/data/mockResponse.js based on the selected mode and renders it
@@ -23,7 +23,7 @@ export default function MockToolPanel() {
 
     // FUTURE API INTEGRATION:
     // Send user input, selected mode, and district context to CoSN-approved AI backend.
-    // Backend should retrieve relevant CoSN resources, apply the Digital Mindfulness framework,
+    // Backend should retrieve relevant CoSN resources, apply the Screentime Mindfulness framework,
     // and return structured feedback. This is intentionally stubbed for the prototype.
     //
     // Example shape of the eventual call (NOT implemented here):
@@ -44,7 +44,7 @@ export default function MockToolPanel() {
   function handleCopy() {
     if (!result) return
     const lines = [
-      'CoSN Digital Mindfulness Coach — Mock Feedback (prototype)',
+      'CoSN Screentime Mindfulness Coach — Mock Feedback (prototype)',
       `Mode: ${MODES.find((m) => m.value === mode)?.label ?? mode}`,
       '',
       ...result.rows.map((r) => `• ${r.label}: ${r.value}`),
@@ -79,7 +79,7 @@ export default function MockToolPanel() {
               </svg>
             </span>
             <div>
-              <h2 className="text-sm font-bold text-cosn-navy">Digital Mindfulness Review</h2>
+              <h2 className="text-sm font-bold text-cosn-navy">Screentime Mindfulness Review</h2>
               <p className="text-xs text-cosn-gray">Demo · no AI connected</p>
             </div>
           </div>

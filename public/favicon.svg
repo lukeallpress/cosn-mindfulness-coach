@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CoSN">
+  <defs>
+    <linearGradient id="c" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#003B73" />
+      <stop offset="1" stop-color="#23C7D9" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#c)" />
+  <!-- "C" drawn as a thick open arc so it renders without relying on fonts -->
+  <path
+    d="M45 21 A16 16 0 1 0 45 43"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="7"
+    stroke-linecap="round"
+  />
+</svg>

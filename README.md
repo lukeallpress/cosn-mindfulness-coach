@@ -1,12 +1,12 @@
-# CoSN Digital Mindfulness Coach — Prototype Shell
+# CoSN Screentime Mindfulness Coach — Prototype Shell
 
-A polished, front-end-only landing page that pitches a future **CoSN Digital Mindfulness
+A polished, front-end-only landing page that pitches a future **CoSN Screentime Mindfulness
 Coach**: a planning assistant that pairs CoSN research and frameworks with a district's
 local context to help schools move *from screen time debate to intentional technology use*.
 
 > **This prototype does not connect to an AI model or external API.** It is intended to
 > demonstrate the user experience, visual direction, and possible interaction model for a
-> future CoSN-funded Digital Mindfulness Coach. A production version would require approved
+> future CoSN-funded Screentime Mindfulness Coach. A production version would require approved
 > AI infrastructure, source retrieval, privacy review, authentication decisions, governance
 > policies, and CoSN-approved content curation.
 
@@ -29,7 +29,7 @@ npm run preview  # serve the production build locally
 ## How it works (and what's intentionally not built)
 
 - **No backend, no auth, no database, no AI/API.** Everything runs in the browser.
-- The interactive **"Digital Mindfulness Review"** card (the product preview in the hero)
+- The interactive **"Screentime Mindfulness Review"** card (the product preview in the hero)
   takes a lesson/policy/concern, a review mode, and — on **Generate CoSN-Aligned Feedback**
   — renders a **canned sample response** after a short simulated delay. There is no network
   request anywhere.
@@ -48,7 +48,7 @@ output.
 ```javascript
 // FUTURE API INTEGRATION:
 // Send user input, selected mode, and district context to CoSN-approved AI backend.
-// Backend should retrieve relevant CoSN resources, apply the Digital Mindfulness framework,
+// Backend should retrieve relevant CoSN resources, apply the Screentime Mindfulness framework,
 // and return structured feedback. This is intentionally stubbed for the prototype.
 ```
 

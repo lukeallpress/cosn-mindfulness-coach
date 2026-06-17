@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.cosn.org)",
+      "Bash(npm --version)",
+      "Bash(gh auth *)",
+      "Bash(gh --version)"
+    ]
+  }
+}

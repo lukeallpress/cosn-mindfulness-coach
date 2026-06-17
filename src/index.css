@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+/*
+  CoSN Digital Mindfulness Coach — design tokens.
+  Palette grounded in CoSN's "Setting Conditions for Success" look:
+  deep-blue foundation, teal/cyan gradients, calm white space, sparing coral accent.
+  Tailwind v4 CSS-first config: tokens below generate utilities like
+  `bg-cosn-blue`, `text-cosn-slate`, `from-cosn-navy`, etc.
+*/
+@theme {
+  /* Primary */
+  --color-cosn-blue: #003b73;
+  --color-cosn-navy: #062b49;
+  --color-cosn-bright: #0077b6;
+  --color-cosn-teal: #23c7d9;
+  --color-cosn-mint: #a7f3d0;
+
+  /* Neutral */
+  --color-cosn-offwhite: #f7fafc;
+  --color-cosn-mist: #e6f0f7;
+  --color-cosn-slate: #243447;
+  --color-cosn-gray: #64748b;
+
+  /* Accent — use sparingly */
+  --color-cosn-coral: #ff8a5b;
+
+  --font-sans: 'Inter', 'Avenir', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Offset anchored sections so the sticky nav doesn't cover their headings. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-cosn-slate);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Consistent, visible keyboard focus across the prototype. */
+:focus-visible {
+  outline: 3px solid var(--color-cosn-coral);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

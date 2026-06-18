@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="Implementation notes for the CoSN Screentime Mindfulness Coach — for the CoSN AI task force. What it would take to make the assistant trustworthy: architecture, calibration, infrastructure, cost, and governance."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Implementation Notes — CoSN Screentime Mindfulness Coach</title>
+    <style>
+      :root {
+        --blue: #003b73;
+        --navy: #062b49;
+        --bright: #0077b6;
+        --teal: #23c7d9;
+        --mint: #a7f3d0;
+        --offwhite: #f7fafc;
+        --mist: #e6f0f7;
+        --slate: #243447;
+        --gray: #64748b;
+        --coral: #ff8a5b;
+        --font: 'Inter', 'Avenir', 'Segoe UI', Roboto, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--slate);
+        background: var(--offwhite);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--bright); }
+      a:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 4px; }
+
+      .top {
+        background: linear-gradient(135deg, var(--navy), var(--blue) 55%, #0a5e86);
+        color: #fff;
+        padding: 40px 0 56px;
+      }
+      .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+      .brand .mark {
+        width: 34px; height: 34px; border-radius: 9px;
+        display: grid; place-items: center;
+        background: linear-gradient(135deg, var(--blue), var(--teal));
+        font-weight: 800; color: #fff;
+      }
+      .brand small { display: block; font-weight: 500; color: var(--mint); font-size: 13px; }
+
+      .badge {
+        display: inline-block; margin-top: 28px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: var(--mint); font-size: 13px; font-weight: 600;
+        padding: 6px 14px; border-radius: 999px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.1; margin: 16px 0 10px; letter-spacing: -0.01em; }
+      .lede { color: rgba(231, 240, 247, 0.92); font-size: 18px; margin: 0; max-width: 60ch; }
+      .toplinks { margin-top: 22px; font-size: 14px; }
+      .toplinks a { color: #fff; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 1px; }
+      .toplinks span { color: rgba(231,240,247,0.6); margin: 0 10px; }
+
+      main { padding: 48px 0 24px; }
+      section { margin-bottom: 40px; }
+      .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bright); margin: 0 0 6px; }
+      h2 { font-size: 24px; color: var(--navy); margin: 0 0 12px; line-height: 1.25; }
+      h3 { font-size: 17px; color: var(--navy); margin: 22px 0 4px; }
+      p { margin: 0 0 14px; }
+      .muted { color: var(--gray); }
+
+      .card {
+        background: #fff; border: 1px solid var(--mist); border-radius: 16px;
+        padding: 24px 26px; box-shadow: 0 12px 30px -22px rgba(6, 43, 73, 0.5);
+      }
+      ul { margin: 8px 0 14px; padding-left: 0; list-style: none; }
+      ul li { position: relative; padding-left: 26px; margin-bottom: 10px; }
+      ul li::before {
+        content: ''; position: absolute; left: 0; top: 9px;
+        width: 8px; height: 8px; border-radius: 2px; background: var(--teal);
+      }
+      ol.flow { counter-reset: step; padding-left: 0; list-style: none; margin: 8px 0 0; }
+      ol.flow li { position: relative; padding-left: 46px; margin-bottom: 16px; }
+      ol.flow li::before {
+        counter-increment: step; content: counter(step);
+        position: absolute; left: 0; top: 0; width: 30px; height: 30px;
+        background: var(--blue); color: #fff; border-radius: 9px;
+        display: grid; place-items: center; font-weight: 700; font-size: 14px;
+      }
+      ol.flow strong { color: var(--navy); }
+
+      .note {
+        border-left: 4px solid var(--coral);
+        background: #fff;
+        border-radius: 0 12px 12px 0;
+        padding: 16px 20px; margin: 18px 0;
+      }
+      .grid { display: grid; gap: 14px; }
+      @media (min-width: 620px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+      .stat { background: #fff; border: 1px solid var(--mist); border-radius: 14px; padding: 18px 20px; }
+      .stat b { display: block; color: var(--navy); font-size: 15px; margin-bottom: 2px; }
+      .stat span { color: var(--gray); font-size: 14px; }
+
+      .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+      .tag.done { background: rgba(167, 243, 208, 0.4); color: var(--blue); }
+      .tag.todo { background: var(--mist); color: var(--gray); }
+
+      footer { border-top: 1px solid var(--mist); margin-top: 24px; padding: 28px 0 56px; color: var(--gray); font-size: 13px; }
+      footer .wrap { max-width: 820px; }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <div class="brand">
+          <span class="mark">C</span>
+          <span>
+            CoSN Screentime Mindfulness Coach
+            <small>Implementation notes</small>
+          </span>
+        </div>
+
+        <span class="badge">Prepared for the CoSN AI task force</span>
+        <h1>What it would take to build this well</h1>
+        <p class="lede">
+          The deeper detail behind the prototype — how the assistant would work, what makes
+          its feedback trustworthy, and the infrastructure, cost, and governance involved.
+          Written for a tech-savvy, non-developer audience.
+        </p>
+        <p class="toplinks">
+          <a href="./">← Back to the prototype</a>
+          <span>·</span>
+          <a href="https://chatgpt.com/g/g-6a3227e0e4d88191891f149733dfa71f-cosn-digital-mindfulness-coach" target="_blank" rel="noopener noreferrer">Working GPT version ↗</a>
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section>
+        <p class="eyebrow">In one line</p>
+        <h2>A guided assistant grounded in CoSN's own guidance</h2>
+        <p>
+          A leader or educator describes a lesson, policy question, or screen-time concern and
+          chooses a mode (e.g., <em>Leader Policy Support</em>). The assistant returns tailored,
+          framework-based feedback and next steps — anchored to CoSN's research and positions,
+          not the open internet. The interface is already live; the AI layer is intentionally
+          stubbed in the prototype. The points below describe what a real build requires.
+        </p>
+      </section>
+
+      <section>
+        <p class="eyebrow">How it works</p>
+        <h2>"Retrieve, then reason"</h2>
+        <div class="card">
+          <ol class="flow">
+            <li>
+              <strong>Retrieve.</strong> The tool pulls the most relevant passages from a
+              curated library of CoSN reports, toolkits, and policy guidance — so answers are
+              rooted in approved material rather than a model's general training.
+            </li>
+            <li>
+              <strong>Reason against the framework.</strong> It applies CoSN's mindfulness
+              framework (Purpose · Learning Value · Safety · Reflection) as an explicit rubric.
+            </li>
+            <li>
+              <strong>Return a structured plan.</strong> It produces a snapshot and concrete next
+              steps for the specific situation — supporting local judgment, not replacing it.
+            </li>
+          </ol>
+          <p class="muted" style="margin: 4px 0 0;">
+            This "retrieve-then-reason" pattern (often called RAG — retrieval-augmented
+            generation) is the standard way to keep an AI assistant on-message and citable.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">The real work</p>
+        <h2>Making the feedback trustworthy</h2>
+        <p>
+          This is content and editorial work as much as engineering — and it's where CoSN's
+          expertise is essential:
+        </p>
+        <ul>
+          <li><strong>Curate the source material.</strong> Decide exactly which CoSN reports, toolkits, and guidance the assistant may draw from.</li>
+          <li><strong>Define the rubric.</strong> Turn the framework into explicit criteria the assistant scores against, so its reasoning is consistent and explainable.</li>
+          <li><strong>Calibrate against experts.</strong> Run real scenarios, compare the assistant's feedback to what a CoSN expert would say, and tune until they reliably agree.</li>
+          <li><strong>Set guardrails.</strong> Instruct it to defer to local context, flag "verify locally," cite its sources, and stay within scope.</li>
+          <li><strong>Keep it current.</strong> As CoSN's guidance evolves, the library and rubric are updated. This is an ongoing product, not a one-time document.</li>
+        </ul>
+        <div class="note">
+          <strong>Why this matters most:</strong> the output will carry CoSN's name. Calibration
+          is what separates a credible CoSN resource from a generic chatbot.
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Infrastructure</p>
+        <h2>Hosting and "powering" it</h2>
+        <div class="grid two">
+          <div class="stat">
+            <b>The interface</b>
+            <span>A static web page (what you're viewing). Essentially free to host and already live on GitHub Pages.</span>
+          </div>
+          <div class="stat">
+            <b>The "brain"</b>
+            <span>A commercial AI model (e.g., Anthropic's Claude or OpenAI) accessed via an <strong>API</strong>. CoSN holds the account and pays per use.</span>
+          </div>
+          <div class="stat">
+            <b>The knowledge layer</b>
+            <span>A searchable store of the curated CoSN materials the model retrieves from — a low-cost managed service.</span>
+          </div>
+          <div class="stat">
+            <b>Governance plumbing</b>
+            <span>Access control, a clear data-handling policy (especially if districts upload local context), and a privacy/vendor review.</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Budget shape</p>
+        <h2>Costs are modest, but recurring</h2>
+        <ul>
+          <li><strong>Hosting:</strong> negligible for the interface.</li>
+          <li><strong>Per-use AI:</strong> typically a fraction of a cent to a few cents per question, so cost scales gently with adoption.</li>
+          <li><strong>Knowledge store:</strong> low monthly cost.</li>
+          <li><strong>The ongoing investment is people:</strong> periodic content curation and re-calibration as guidance changes.</li>
+        </ul>
+        <p class="muted">Rough figures for planning only — a pilot would produce real numbers.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Governance &amp; privacy</p>
+        <h2>Decisions to make up front</h2>
+        <ul>
+          <li><strong>Scope:</strong> what the assistant is allowed to say, and where it must defer.</li>
+          <li><strong>Data handling:</strong> whether district-provided context is stored, how it's protected, and what the AI vendor may retain (most offer no-training / no-retention options).</li>
+          <li><strong>Sign-off:</strong> who reviews and approves the curated library and the assistant's behavior.</li>
+        </ul>
+        <p>None of this is exotic — but it should be decided deliberately, not bolted on later.</p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Where things stand</p>
+        <h2>Prototype status</h2>
+        <div class="card">
+          <p style="margin:0 0 10px;"><span class="tag done">Built</span> &nbsp; Polished, responsive interface; sample interaction flow; the full vision, end to end.</p>
+          <p style="margin:0 0 10px;"><span class="tag done">Built</span> &nbsp; A separate, working custom GPT that already produces CoSN-flavored feedback today (rough, unpolished).</p>
+          <p style="margin:0;"><span class="tag todo">Not yet</span> &nbsp; The connected, calibrated AI layer: curated CoSN library, expert-tuned rubric, guardrails, and governance.</p>
+        </div>
+      </section>
+
+      <section>
+        <p class="eyebrow">Recommended next step</p>
+        <h2>A small, funded pilot</h2>
+        <p>
+          Connect the existing logic to a curated CoSN knowledge base, test it against several
+          real scenarios with expert review, and bring the results back to the task force. That
+          produces real evidence on quality, effort, and cost before any larger commitment.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        Internal review document for the CoSN AI task force · Prototype concept, not an official
+        CoSN product. The AI/API layer is intentionally not connected in the current prototype.
+        “CoSN” is referenced for design and positioning context only.
+      </div>
+    </footer>
+  </body>
+</html>
